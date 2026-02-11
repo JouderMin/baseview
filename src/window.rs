@@ -50,7 +50,7 @@ pub trait WindowHandler {
 }
 
 pub struct Window<'a> {
-    window: platform::Window<'a>,
+    pub window: platform::Window<'a>,
 
     // so that Window is !Send on all platforms
     phantom: PhantomData<*mut ()>,
