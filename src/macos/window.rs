@@ -109,6 +109,9 @@ impl WindowInner {
 
     fn raw_window_handle(&self) -> Result<RawWindowHandle, HandleError> {
         if self.open.get() {
+            if let Some(ns_window) = self.ns_window.get() {
+                unsafe { NSWindow::setContentView_(ns_window, self.ns_view) };
+            }
             let ns_view = NonNull::new(self.ns_view as *mut c_void);
             let handler = if let Some(ns_view) = ns_view {
                 AppKitWindowHandle::new(ns_view)
@@ -350,6 +353,9 @@ impl<'a> Window<'a> {
 
     #[cfg(feature = "opengl")]
     fn create_gl_context(ns_window: Option<id>, ns_view: id, config: GlConfig) -> GlContext {
+        if let Some(ns_window) = ns_window {
+            unsafe { NSWindow::setContentView_(ns_window, self.ns_view) };
+        }
         let ns_view = NonNull::new(ns_view as *mut c_void);
         let handle = if let Some(ns_view) = ns_view {
             AppKitWindowHandle::new(ns_view)
