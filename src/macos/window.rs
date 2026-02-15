@@ -354,7 +354,7 @@ impl<'a> Window<'a> {
     #[cfg(feature = "opengl")]
     fn create_gl_context(ns_window: Option<id>, ns_view: id, config: GlConfig) -> GlContext {
         if let Some(ns_window) = ns_window {
-            unsafe { NSWindow::setContentView_(ns_window, self.ns_view) };
+            unsafe { NSWindow::setContentView_(ns_window, ns_view) };
         }
         let ns_view = NonNull::new(ns_view as *mut c_void);
         let handle = if let Some(ns_view) = ns_view {
