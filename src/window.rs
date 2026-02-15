@@ -75,7 +75,7 @@ impl<'a> Window<'a> {
 
     pub fn open_parented<P, H, B>(parent: &P, options: WindowOpenOptions, build: B) -> WindowHandle
     where
-        P: HasWindowHandle,
+        P: HasRawWindowHandle,
         H: WindowHandler + 'static,
         B: FnOnce(&mut Window) -> H,
         B: Send + 'static,
