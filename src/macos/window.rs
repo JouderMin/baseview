@@ -171,11 +171,13 @@ impl<'a> Window<'a> {
                 .map(|gl_config| Self::create_gl_context(None, ns_view, gl_config)),
         };
 
+        unsafe {
+            let _: id = msg_send![handle.ns_view.as_ptr() as *mut Object, addSubview: ns_view];
+        }
+
         let window_handle = Self::init(window_inner, window_info, build);
 
         unsafe {
-            let _: id = msg_send![handle.ns_view.as_ptr() as *mut Object, addSubview: ns_view];
-
             let () = msg_send![pool, drain];
         }
 
