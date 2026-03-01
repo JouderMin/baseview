@@ -157,8 +157,7 @@ impl<'a> Window<'a> {
             println!("2");
             let child_window: id = msg_send![class!(NSWindow), alloc];
             println!("3");
-            NSWindow
-            let _: id = msg_send![child_window, setConentView: &ns_view];
+            let _: id = msg_send![child_window, setContentView: &ns_view];
             println!("4");
             let _: id = msg_send![parenrt_window, addChildWindow:&child_window ordered:NSWindowOrderingMode::NSWindowAbove];
             println!("5");
