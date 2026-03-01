@@ -156,7 +156,7 @@ impl<'a> Window<'a> {
             let parent_window: id = msg_send![handle.ns_view as *mut Object, window];
             println!("2");
             let child_window: id = msg_send![class!(NSWindow), alloc];
-            NSWindow::initWithContentRect_styleMask_backing_defer_(
+            let child_window: id = NSWindow::initWithContentRect_styleMask_backing_defer_(
                 child_window,
                 NSRect::new(NSPoint::new(0.0, 0.0), NSSize::new(600.0, 400.0)),
                 NSWindowStyleMask::NSBorderlessWindowMask,
