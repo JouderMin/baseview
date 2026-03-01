@@ -152,22 +152,7 @@ impl<'a> Window<'a> {
         let ns_view = unsafe { create_view(&options) };
 
         unsafe {
-            println!("1");
-            let parent_window: id = msg_send![handle.ns_view as *mut Object, window];
-            println!("2");
-            let child_window: id = msg_send![class!(NSWindow), alloc];
-            let child_window: id = NSWindow::initWithContentRect_styleMask_backing_defer_(
-                child_window,
-                NSRect::new(NSPoint::new(0.0, 0.0), NSSize::new(600.0, 400.0)),
-                NSWindowStyleMask::NSBorderlessWindowMask,
-                NSBackingStoreType::NSBackingStoreRetained,
-                true,
-            );
-            println!("3");
-            let _: id = msg_send![child_window, setContentView: ns_view];
-            println!("4");
-            let _: id = msg_send![parent_window, addChildWindow:child_window ordered:NSWindowOrderingMode::NSWindowAbove];
-            println!("5");
+            let _: id = msg_send![handle.ns_view as *mut Object, addSubview: ns_view];
         }
 
         let window_inner = WindowInner {
