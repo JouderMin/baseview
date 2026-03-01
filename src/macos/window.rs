@@ -164,11 +164,15 @@ impl<'a> Window<'a> {
         };
 
         let window_handle = unsafe {
+            println!("1");
             let _: id = msg_send![handle.ns_view as *mut Object, addSubview: ns_view];
 
+            println!("2");
             let window_handle = Self::init(window_inner, window_info, build);
 
+            println!("3");
             let () = msg_send![pool, drain];
+            println!("4");
 
             window_handle
         };
