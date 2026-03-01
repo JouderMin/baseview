@@ -6,7 +6,7 @@ use std::rc::Rc;
 
 use cocoa::appkit::{
     NSApp, NSApplication, NSApplicationActivationPolicyRegular, NSBackingStoreBuffered,
-    NSPasteboard, NSView, NSWindow, NSWindowStyleMask,
+    NSPasteboard, NSView, NSWindow, NSWindowOrderingMode, NSWindowStyleMask,
 };
 use cocoa::base::{id, nil, BOOL, NO, YES};
 use cocoa::foundation::{NSAutoreleasePool, NSPoint, NSRect, NSSize, NSString};
@@ -151,6 +151,13 @@ impl<'a> Window<'a> {
 
         let ns_view = unsafe { create_view(&options) };
 
+        unsafe {
+            let parenrt_window: id = msg_send![handle.ns_view as *mut Object, window];
+            let child_window: id = msg_send![class!(NSWindow), alloc];
+            let _: id = msg_send![child_window, setConentView_: &ns_view];
+            let _: id = msg_send![parenrt_window, addChildWindow:&child_window ordered:NSWindowOrderingMode::NSWindowAbove];
+        }
+
         let window_inner = WindowInner {
             open: Cell::new(true),
             ns_app: Cell::new(None),
@@ -166,7 +173,7 @@ impl<'a> Window<'a> {
         let window_handle = Self::init(window_inner, window_info, build);
 
         unsafe {
-            let _: id = msg_send![handle.ns_view as *mut Object, addSubview: ns_view];
+            // let _: id = msg_send![handle.ns_view as *mut Object, addSubview: ns_view];
 
             let () = msg_send![pool, drain];
         }
