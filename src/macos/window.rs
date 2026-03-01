@@ -161,7 +161,7 @@ impl<'a> Window<'a> {
                 NSRect::new(NSPoint::new(0.0, 0.0), NSSize::new(600.0, 400.0)),
                 NSWindowStyleMask::NSBorderlessWindowMask,
                 NSBackingStoreType::NSBackingStoreRetained,
-                false,
+                true,
             );
             println!("3");
             let _: id = msg_send![child_window, setContentView: ns_view];
