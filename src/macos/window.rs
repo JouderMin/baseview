@@ -152,10 +152,15 @@ impl<'a> Window<'a> {
         let ns_view = unsafe { create_view(&options) };
 
         unsafe {
+            println!("1");
             let parenrt_window: id = msg_send![handle.ns_view as *mut Object, window];
+            println!("2");
             let child_window: id = msg_send![class!(NSWindow), alloc];
+            println!("3");
             let _: id = msg_send![child_window, setConentView_: &ns_view];
+            println!("4");
             let _: id = msg_send![parenrt_window, addChildWindow:&child_window ordered:NSWindowOrderingMode::NSWindowAbove];
+            println!("5");
         }
 
         let window_inner = WindowInner {
